@@ -364,9 +364,7 @@ $(function () {
         // Especially in gif or high-res subreddits where each image can be 50 MB.
         // My high-end desktop browser was unresponsive at times.
         //preLoadImages(pic.url);
-        if (pic.type == imageTypes.image) {
 			rp.photos.push(pic);
-		  }
 
         var i = rp.photos.length - 1;
         var numberButton = $("<a />").html(i + 1)
@@ -769,7 +767,7 @@ $(function () {
 
         rp.session.loadingNextImages = true;
 
-        var jsonUrl = rp.redditBaseUrl + rp.subredditUrl + ".json?jsonp=?" + rp.session.after + "&" + getVars;
+        var jsonUrl = rp.redditBaseUrl + rp.subredditUrl + ".json?jsonp=?" + rp.session.after + "&limit=100&" + getVars;
         var failedAjax = function (/*data*/) {
             var message = "Failed ajax, maybe a bad url? Sorry about that :(";
             var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
@@ -815,6 +813,8 @@ $(function () {
                     reportError('invald data item');
                     return;
                 }
+					 var url = item.data.url || item.data.link_url;
+					 if (! /\.(jpg|gif|jpeg|png)$/i.test(url)) return;
                 addImageSlide({
                     url: item.data.url || item.data.link_url,
                     title: item.data.title || item.data.link_title,
