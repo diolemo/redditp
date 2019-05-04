@@ -12,9 +12,9 @@ var rp = {};
 rp.settings = {
     debug: true,
     // Speed of the animation
-    animationSpeed: 1000,
+    animationSpeed: 0,
     shouldAutoNextSlide: true,
-    timeToNextSlide: 6 * 1000,
+    timeToNextSlide: 5 * 1000,
     cookieDays: 300,
     goodExtensions: ['.jpg', '.jpeg', '.gif', '.bmp', '.png'],
     nsfw: true
@@ -364,7 +364,9 @@ $(function () {
         // Especially in gif or high-res subreddits where each image can be 50 MB.
         // My high-end desktop browser was unresponsive at times.
         //preLoadImages(pic.url);
-        rp.photos.push(pic);
+        if (pic.type == imageTypes.image) {
+			rp.photos.push(pic);
+		  }
 
         var i = rp.photos.length - 1;
         var numberButton = $("<a />").html(i + 1)
